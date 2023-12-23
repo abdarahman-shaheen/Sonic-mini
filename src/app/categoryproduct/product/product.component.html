@@ -1,0 +1,55 @@
+<div style="display: flex; justify-content: space-around;">
+  <h2>Product</h2>
+  <button (click)="onNew()"> Add New</button>
+
+</div>
+
+
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>discount</th>
+        <th>Tax</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.discount }}</td>
+        <td>{{ product.tax }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+
+  </div>
+
+  <div *ngIf="isNew" class="add-category">
+    <h3>Add New Product</h3>
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <div class="form-group">
+        <label for="ProductName">Product Name</label>
+        <input type="text" id="ProductName" name="name" ngModel required>
+      </div>
+      <div class="form-group">
+        <label for="Productprice">Price</label>
+        <input type="text" id="Productprice" name="price" ngModel required>
+      </div>
+      <div class="form-group">
+        <label for="Productdiscount">discount</label>
+        <input type="text" id="Productdiscount" name="discount" ngModel required>
+      </div>
+      <div class="form-group">
+        <label for="ProductTax">Tax</label>
+        <input type="text" id="ProductTax" name="tax" ngModel required>
+      </div>
+      <button type="submit">Add Product</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="wrapper">
+  <form class="form-signin" [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+    <h2 class="form-signin-heading">Please login</h2>
+    <input type="text" class="form-control" formControlName="email" placeholder="Email Address" />
+    <div *ngIf="formLogin.get('email').touched && formLogin.get('email').hasError('required')" class="text-danger">
+      Email is required.
+    </div>
+    <div *ngIf="formLogin.get('email').touched && formLogin.get('email').hasError('email')" class="text-danger">
+      Invalid email format.
+    </div>
+
+    <input type="password" class="form-control" formControlName="password" placeholder="Password" required=""/>
+    <div *ngIf="formLogin.get('password').touched && formLogin.get('password').hasError('required')" class="text-danger">
+      Password is required.
+    </div>
+    <div *ngIf="formLogin.get('password').touched && formLogin.get('password').hasError('minlength')" class="text-danger">
+      Password must be at least 6 characters.
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+    <p></p>
+  </form>
+</div>

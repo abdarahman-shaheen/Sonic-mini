@@ -1,0 +1,28 @@
+<div>
+  <input type="text" placeholder="Search" [(ngModel)]="searchInput" >
+  <button class="btn btn-success" (click)="goEntryOperation()">Add</button>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Operation ID</th>
+      <th scope="col">Operation Type</th>
+      <th scope="col">Operation Cutomer</th>
+      <th scope="col">Operation Date</th>
+      <th scope="col">Net Total</th>
+      <th scope="col">Gross Total</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let operation of operations |search:searchInput:'type'">
+      <td>{{operation.id}}</td>
+      <td>{{operation.type}}</td>
+      <td>{{operation.nameCustomer}}</td>
+      <td>{{operation.date | date}} </td>
+      <td>{{operation.netTotal}}</td>
+      <td>{{operation.grossTotal}}</td>
+    </tr>
+
+  </tbody>
+</table>
