@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-xs-12">
+    <form [formGroup]="CategoryForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="button-group">
+          <button type="submit" class="btn btn-success" [disabled]="!CategoryForm.valid">Save</button>
+          <!-- <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button> -->
+        </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" formControlName="name" class="form-control">
+            <div *ngIf="CategoryForm.get('name').invalid && (CategoryForm.get('name').dirty || CategoryForm.get('name').touched)">
+              <small class="text-danger">
+                Name is required.
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      </form>
+         </div>
+</div>
+  <div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

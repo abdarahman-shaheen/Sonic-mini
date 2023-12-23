@@ -1,16 +1,17 @@
-<div style="display: flex; justify-content: space-around;">
-  <h2>Categories</h2>
-  <button (click)="onNew()"> Add New</button>
 
+<h2>Categories</h2>
+<div>
+  <input type="text" placeholder="Search" [(ngModel)]="searchInput" >
+  <button class="btn btn-success" (click)="EditCategories()">Add</button>
 </div>
-
-
-<div class="container">
+<!-- <div style="display: flex; justify-content: space-around;">
+  <button (click)="onNew()"> Add New</button>
+</div> -->
   <table class="table">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>Name</th>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
       </tr>
     </thead>
     <tbody>
@@ -20,11 +21,9 @@
       </tr>
     </tbody>
   </table>
-  <div>
 
-  </div>
 
-  <div *ngIf="isNew" class="add-category">
+  <!-- <div *ngIf="isNew" class="add-category">
     <h3>Add New Category</h3>
     <form (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="form-group">
@@ -33,5 +32,4 @@
       </div>
       <button type="submit">Add Category</button>
     </form>
-  </div>
-</div>
+  </div> -->

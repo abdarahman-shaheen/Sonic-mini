@@ -11,11 +11,11 @@ const routes: Routes = [
     loadChildren: () => import('./operation/operation.module').then((m) => m.OperationModule),
   },
   {
-    path: 'categoryProduct',
+    path: 'ManageProduct',
     loadChildren: () => import('./categoryproduct/categoryproduct.module').then((m) => m.CategoryproductModule),
   },
 
-  // { path: '**', redirectTo: 'login' },
+  { path: '**', redirectTo: 'login' },
 ];
 
 @NgModule({
