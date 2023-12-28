@@ -1,16 +1,16 @@
 <div class="wrapper">
   <form (ngSubmit)="onSubmit()" #f="ngForm">
-    <div class="form-group">
-      <label for="customerName">Customer Name:</label>
-      <select id="customerName" name="customerName" [(ngModel)]="customerName" class="form-control">
-        <option value="">Select Customer</option>
-        <option value="ahmed">ahmed</option>
-        <option value="samer">samer</option>
-      </select>
-    </div>
+<div class="form-group mb-3">
+  <label for="customerName">Customer Name:</label>
+  <select id="customerName" name="customerName" [(ngModel)]="customerName" class="form-control " style="height: 30px;" >
+    <option value="">Select Customer</option>
+    <option value="ahmed">ahmed</option>
+    <option value="samer">samer</option>
+  </select>
+</div>
     <div class="form-group">
       <label for="customerType">Customer Type:</label>
-      <select id="customerType" name="customerType" [(ngModel)]="operationType" class="form-control">
+      <select id="customerType" name="customerType" [(ngModel)]="operationType" class="form-control"  style="height: 30px;">
         <option value="">Select Type</option>
         <option value="sales">sales</option>
         <option value="return">return</option>
@@ -48,7 +48,7 @@
         <h4>Total Count {{ itemCount }} </h4>
       </div>
     </div>
-    <p class="alert alert-danger" *ngIf="isSaveNotAvilable">Please add items to Operation</p>
+    <p class="alert alert-danger" *ngIf="isSaveNotAvilable">{{errorMassage}}</p>
     <div class="button-group">
       <button class="btn btn-success" type="submit">Save</button>
       <button class="btn btn-danger" type="button" (click)="onClear(f)">Clear</button>

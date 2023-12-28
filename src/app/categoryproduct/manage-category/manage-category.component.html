@@ -1,0 +1,22 @@
+
+
+<form [formGroup]="CategoryForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" formControlName="name" class="form-control">
+        <div *ngIf="CategoryForm.get('name').invalid && (CategoryForm.get('name').dirty || CategoryForm.get('name').touched)">
+          <small class="text-danger">
+            Name is required.
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="button-group">
+
+      <button type="submit" class="btn btn-success" [disabled]="!CategoryForm.valid">Save</button>
+      <button type="button" class="btn btn-default ml-2" (click)="onClose()">Close</button>
+    </div>
+</form>

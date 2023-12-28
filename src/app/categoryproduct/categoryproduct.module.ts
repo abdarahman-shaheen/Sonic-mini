@@ -6,7 +6,9 @@ import { CategoryComponent } from './category/category.component';
 import { CategoryProductComponent } from './category-product/category-product.component';
 import { ProductComponent } from './product/product.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EditCategoryComponent } from './edit-category/edit-category.component';
+import { NgbAlert, NgbAlertModule, NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { ManageCategoryComponent } from './manage-category/manage-category.component';
+import { ManageProductComponent } from './manage-product/manage-product.component';
 
 
 @NgModule({
@@ -14,13 +16,22 @@ import { EditCategoryComponent } from './edit-category/edit-category.component';
     CategoryComponent,
     CategoryProductComponent,
     ProductComponent,
-    EditCategoryComponent
+    ManageCategoryComponent,
+    ManageProductComponent,
+
+
   ],
   imports: [
     CommonModule,
     FormsModule,
     CategoryproductRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule,
+    NgbAlert,
+    NgbAlertModule,
+    NgbNavModule,
+
+
   ]
 })
 export class CategoryproductModule { }

@@ -1,5 +1,5 @@
 
 export class Category{
-  id:Number
-name:string
+
+constructor(public categoryName :string,public id? :number , ){}
 }

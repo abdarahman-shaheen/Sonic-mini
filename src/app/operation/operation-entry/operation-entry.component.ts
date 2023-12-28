@@ -1,18 +1,30 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { operationService } from '../operations.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { ProductService } from '../../categoryproduct/product/product.service';
+import { Product } from '../../categoryproduct/product/product.model';
 
 @Component({
   selector: 'app-operation-entry',
   templateUrl: './operation-entry.component.html',
   styleUrls: ['./operation-entry.component.css'], // Fix the typo here
 })
-export class OperationEntryComponent {
+export class OperationEntryComponent implements OnInit {
   constructor(
     private router: Router,
     private operationServie: operationService
-  ) {}
+  , private itemService:ProductService) {}
+
+  ngOnInit(): void {
+    // Subscribe to productsChange to get the updated products
+    this.itemService.productsChange.subscribe((products: Product[]) => {
+      this.items = products;
+    });
+
+    // Fetch products initially
+    this.itemService.getProduct();
+  }
   isSaveNotAvilable = false;
   errorMassege:string
   grossTotal: number = 0;
@@ -21,32 +33,11 @@ export class OperationEntryComponent {
   total: number = 0;
   customerName: string = '';
   operationType: string = '';
-
-  items: {
-    id: number;
-    name: string;
-    price: number;
-    discount: number;
-    tax: number;
-  }[] = [
-    {
-      id: 1,
-      name: 'item1',
-      price: 100,
-      discount: 10,
-      tax: 16,
-    },
-    {
-      id: 2,
-      name: 'item2',
-      price: 200,
-      discount: 20,
-      tax: 16,
-    },
-  ];
+  items:Product[]=[]
   quantityArray: number[] = Array(this.items.length).fill(0);
   itemCount: number = 0;
   Count: number = 0;
+  errorMassage:string
   onChange(index: number, quantity: number) {
     this.quantityArray[index] = quantity || 0;
     this.grossTotal = 0;
@@ -78,7 +69,7 @@ export class OperationEntryComponent {
   }
 
   onSubmit() {
-    if (this.total != 0 && this.operationType!=null && this.customerName !==null) {
+    if (this.total != 0 &&this.operationType!="" && this.customerName !=="") {
       console.log(this.operationType+" "+this.customerName)
       this.operationServie.setOperation({
         grossTotal: this.grossTotal,
@@ -92,6 +83,18 @@ export class OperationEntryComponent {
 
       this.router.navigate(['/operations']);
     } else {
+      if(this.total==0){
+        this.errorMassage=" Please add items to Operation";
+      }
+else if(this.operationType==""){
+  this.errorMassage = "please add operation type"
+}
+else if(this.customerName ==""){
+  this.errorMassage = "please add customer type"
+}
+else{
+  this.errorMassage=" Please add items to Operation";
+}
       this.isSaveNotAvilable = true;
       // switch(this.operationType==null || this.customerName){
       //   case this.operationType==null :

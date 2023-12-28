@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { Operation } from "./operations.model";
+import { ProductService } from "../categoryproduct/product/product.service";
 interface OperationDetail{
   grossTotal: number;
   totalDiscount: number;
@@ -15,6 +16,8 @@ interface OperationDetail{
   providedIn:"root"
 })
 export class operationService{
+
+  constructor(private productService:ProductService){}
   operationDetail = new Subject<{
     grossTotal: number;
     totalDiscount: number;
@@ -60,4 +63,9 @@ export class operationService{
   getOperation() {
     return this.operations.slice();
   }
+  getEntryService(){
+    this.productService.products.slice()
+  }
+
 }
+

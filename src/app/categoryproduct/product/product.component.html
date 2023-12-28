@@ -1,35 +1,10 @@
-<div style="display: flex; justify-content: space-around;">
+<!-- <div style="display: flex; justify-content: space-around;">
   <h2>Product</h2>
   <button (click)="onNew()"> Add New</button>
-
 </div>
 
 
 <div class="container">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>discount</th>
-        <th>Tax</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let product of products">
-        <td>{{ product.id }}</td>
-        <td>{{ product.name }}</td>
-        <td>{{ product.price }}</td>
-        <td>{{ product.discount }}</td>
-        <td>{{ product.tax }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <div>
-
-  </div>
-
   <div *ngIf="isNew" class="add-category">
     <h3>Add New Product</h3>
     <form (ngSubmit)="onSubmit(f)" #f="ngForm">
@@ -52,4 +27,72 @@
       <button type="submit">Add Product</button>
     </form>
   </div>
+</div> -->
+
+<h2>Products</h2>
+
+<div class="divSearch">
+  <input type="text" placeholder="Search" [(ngModel)]="searchInput" >
+  <!-- <button class="btn btn-success" (click)="EditCategories()">Add</button> -->
+  <button type="button" class="btn btn-primary"  (click)="onAddMode();openModal()">
+    Add
+  </button>
 </div>
+<!-- <div style="display: flex; justify-content: space-around;">
+  <button (click)="onNew()"> Add New</button>
+</div> -->
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>discount</th>
+        <th>Tax</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products;let i = index">
+        <td>{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.discount }}</td>
+        <td>{{ product.tax }}</td>
+        <div class="button-group">
+
+          <button (click)="onEditMode(product.id);openModal()"  type="button" class="btn btn-primary" >
+            Edit
+          </button>
+          <button (click)="onDeleteMode(product.id)"type="button" class="btn btn-danger" >
+            Delete
+          </button>
+        </div>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+  <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div>
+
+
+<ng-template #FormManageModal let-modal style="margin-top:100px;">
+      <div class="modal-header">
+        <h5 class="modal-title" >Modal title</h5>
+        <button type="button" class="close"  aria-label="Close" (click)="closeModel()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+ <app-manage-product (closeModalEvent)="closeModel()"  [editMode]="isModeEdit" [EditIndex]="indexEdit"></app-manage-product>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div> -->
+
+</ng-template>
+

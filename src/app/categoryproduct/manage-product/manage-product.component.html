@@ -1,0 +1,55 @@
+
+
+
+<form [formGroup]="ProductForm" (ngSubmit)="onSubmit()">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" formControlName="name" class="form-control">
+        <div *ngIf="ProductForm.get('name').invalid && (ProductForm.get('name').dirty || ProductForm.get('name').touched)">
+          <small class="text-danger">
+            Name is required.
+          </small>
+        </div>
+        <label for="price">Price</label>
+        <input type="number" id="price" formControlName="price" class="form-control">
+        <div *ngIf="ProductForm.get('price').invalid && (ProductForm.get('price').dirty || ProductForm.get('price').touched)">
+          <small class="text-danger">
+            Price is required.
+          </small>
+        </div>
+        <label for="discount">Discount</label>
+        <input type="number" id="discount" formControlName="discount" class="form-control">
+        <div *ngIf="ProductForm.get('discount').invalid && (ProductForm.get('discount').dirty || ProductForm.get('discount').touched)">
+          <small class="text-danger">
+            Discount is required.
+          </small>
+        </div>
+        <label for="tax">Tax</label>
+        <input type="number" id="tax" formControlName="tax" class="form-control">
+        <div *ngIf="ProductForm.get('tax').invalid && (ProductForm.get('tax').dirty || ProductForm.get('tax').touched)">
+          <small class="text-danger">
+            tax is required.
+          </small>
+        </div>
+        <div class="form-group">
+          <label for="CategoryId">Category</label>
+          <select id="CategoryId" formControlName="CategoryId" class="form-control" style="height: 30px;">
+            <option [value]="null" disabled selected>Select a category</option>
+            <option *ngFor="let category of categories" [value]="category.id">{{ category.categoryName}}</option>
+          </select>
+          <div *ngIf="ProductForm.get('CategoryId').invalid && (ProductForm.get('CategoryId').dirty || ProductForm.get('CategoryId').touched)">
+            <small class="text-danger">
+              Category is required.
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success" [disabled]="!ProductForm.valid">Save</button>
+  <button type="button" class="btn btn-default ml-2" (click)="onClose()">Close</button>
+
+</form>

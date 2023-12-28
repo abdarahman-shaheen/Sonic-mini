@@ -1,23 +1,4 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 500vh; /* Adjust to your preference */
-  background-color: #f4f4f4; /* Background color */
-}
-
-.links {
-  display: flex;
-  gap: 20px; /* Adjust to your preference */
-  margin-bottom: 20px; /* Adjust to your preference */
-}
-
-a {
-  text-decoration: none;
-  color: #3498db; /* Link color */
-  font-size: 20px; /* Adjust to your preference */
-}
-
-.router-outlet {
+  margin-top: 30px;
   width: 100%;
 }
