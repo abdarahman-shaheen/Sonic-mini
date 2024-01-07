@@ -33,7 +33,7 @@ setProduct(product: Product) {
 }
 updateProduct(product: Product) {
   debugger
-  this.http.put<Product>(this.apiUrl + `/api/Item/${product.id}`, product).subscribe(
+  this.http.put<Product>(this.apiUrl + `/api/Item`,product).subscribe(
     (response: Product) => {
       console.log(response);
       var updatedCategory= this.products.findIndex(products =>products.id==product.id)

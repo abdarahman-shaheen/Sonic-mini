@@ -1,46 +1,12 @@
-<!-- <div style="display: flex; justify-content: space-around;">
-  <h2>Product</h2>
-  <button (click)="onNew()"> Add New</button>
-</div>
-
-
-<div class="container">
-  <div *ngIf="isNew" class="add-category">
-    <h3>Add New Product</h3>
-    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-      <div class="form-group">
-        <label for="ProductName">Product Name</label>
-        <input type="text" id="ProductName" name="name" ngModel required>
-      </div>
-      <div class="form-group">
-        <label for="Productprice">Price</label>
-        <input type="text" id="Productprice" name="price" ngModel required>
-      </div>
-      <div class="form-group">
-        <label for="Productdiscount">discount</label>
-        <input type="text" id="Productdiscount" name="discount" ngModel required>
-      </div>
-      <div class="form-group">
-        <label for="ProductTax">Tax</label>
-        <input type="text" id="ProductTax" name="tax" ngModel required>
-      </div>
-      <button type="submit">Add Product</button>
-    </form>
-  </div>
-</div> -->
-
 <h2>Products</h2>
 
 <div class="divSearch">
-  <input type="text" placeholder="Search" [(ngModel)]="searchInput" >
-  <!-- <button class="btn btn-success" (click)="EditCategories()">Add</button> -->
-  <button type="button" class="btn btn-primary"  (click)="onAddMode();openModal()">
-    Add
+  <input type="text" placeholder="Search" [(ngModel)]="searchInput">
+  <button type="button" class="btn btn-primary" (click)="onAddMode();openModal()">
+    <i class="fa-solid fa-plus"></i> Add
   </button>
 </div>
-<!-- <div style="display: flex; justify-content: space-around;">
-  <button (click)="onNew()"> Add New</button>
-</div> -->
+
 <div class="table-responsive">
   <table class="table">
     <thead>
@@ -48,51 +14,42 @@
         <th>ID</th>
         <th>Name</th>
         <th>Price</th>
-        <th>discount</th>
+        <th>Discount</th>
         <th>Tax</th>
+        <th class="header-actions">Action</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let product of products;let i = index">
+      <tr *ngFor="let product of products | search:searchInput:'name'; let i = index">
         <td>{{ product.id }}</td>
         <td>{{ product.name }}</td>
         <td>{{ product.price }}</td>
         <td>{{ product.discount }}</td>
         <td>{{ product.tax }}</td>
-        <div class="button-group">
-
-          <button (click)="onEditMode(product.id);openModal()"  type="button" class="btn btn-primary" >
-            Edit
+        <td class="action-buttons">
+          <button (click)="onEditMode(product.id);openModal()" type="button" class="btn btn-primary">
+            <i class="fas fa-edit"></i>    Edit
           </button>
-          <button (click)="onDeleteMode(product.id)"type="button" class="btn btn-danger" >
-            Delete
+          <button (click)="onDeleteMode(product.id)" type="button" class="btn btn-danger">
+            <i class="fas fa-trash-alt"></i>  Delete
           </button>
-        </div>
+        </td>
       </tr>
-
     </tbody>
   </table>
 </div>
-  <!-- Button trigger modal -->
-
 
 <!-- Modal -->
 <div>
-
-
-<ng-template #FormManageModal let-modal style="margin-top:100px;">
-      <div class="modal-header">
-        <h5 class="modal-title" >Modal title</h5>
-        <button type="button" class="close"  aria-label="Close" (click)="closeModel()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
- <app-manage-product (closeModalEvent)="closeModel()"  [editMode]="isModeEdit" [EditIndex]="indexEdit"></app-manage-product>
-      </div>
-      <!-- <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div> -->
-
-</ng-template>
-
+  <ng-template #FormManageModal let-modal style="margin-top:100px;">
+    <div class="modal-header">
+      <h5 class="modal-title">Modal title</h5>
+      <button type="button" class="close" aria-label="Close" (click)="closeModel()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-manage-product (closeModalEvent)="closeModel()" [editMode]="isModeEdit" [EditIndex]="indexEdit"></app-manage-product>
+    </div>
+  </ng-template>
+</div>

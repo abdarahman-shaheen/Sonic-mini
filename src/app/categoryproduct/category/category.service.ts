@@ -46,12 +46,12 @@ private apiUrl = "https://localhost:44351";
 // this.categories.push(category);
 // this.categoriyChange.next(this.categories.slice())
   }
-  updateCategory(newRecipe: Category) {
-    this.http.put<Category>(this.apiUrl+"/api/Category", newRecipe).subscribe(
+  updateCategory(category: Category) {
+    this.http.put<Category>(this.apiUrl+"/api/Category", category).subscribe(
       (response: Category) => {
         console.log(response);
 
-     var updatedCategory= this.categories.findIndex(categorie =>newRecipe.id==categorie.id)
+     var updatedCategory= this.categories.findIndex(categorie =>category.id==categorie.id)
      this.categories[updatedCategory] = response;
         this.categoriyChange.next(this.categories.slice());
       },

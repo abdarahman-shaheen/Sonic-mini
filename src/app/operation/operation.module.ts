@@ -5,19 +5,20 @@ import { OperationRoutingModule } from './operation-routing.module';
 import { OperationsComponent } from './operations/operations.component';
 import { OperationEntryComponent } from './operation-entry/operation-entry.component';
 import { FormsModule, NgForm } from '@angular/forms';
-import { SearchPip } from './operations/filter.pipe';
+import { SearchPip } from '../Shared/filter.pipe';
+import { SharedModule } from '../Shared/shared.modul';
 
 
 @NgModule({
   declarations: [
     OperationsComponent,
     OperationEntryComponent,
-    SearchPip
   ],
   imports: [
     CommonModule,
     OperationRoutingModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class OperationModule { }

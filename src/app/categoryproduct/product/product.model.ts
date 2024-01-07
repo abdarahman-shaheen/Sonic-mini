@@ -5,6 +5,7 @@ export class Product{
      public price: number,
     public  discount: number,
     public  tax: number,
-    public CategoryId:number
+    public CategoryId:number,
+    public quantity?:number
     ){}
 }

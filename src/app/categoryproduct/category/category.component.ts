@@ -9,7 +9,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
-  styleUrl: './category.component.css',
+  styleUrls: ['./category.component.css'], // Fix the typo here
 })
 export class CategoryComponent implements OnInit, OnDestroy {
   constructor(
@@ -24,7 +24,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   indexEdit: number;
   categories: Category[];
   isNew = false;
-  searchInput: string;
+  searchInput: string="";
   subscribtionCategory: Subscription;
   countId = 0;
 

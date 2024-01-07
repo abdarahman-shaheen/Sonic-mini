@@ -70,17 +70,13 @@ this.categoryService.getCategories()
     CategoryId: product?product.id:null,
   });
   }
-  // If categoryId is not null, manually set the selected option in the dropdown
-  // if (categoryId !== null) {
-  //   this.ProductForm.get('CategoryId').patchValue(categoryId);
-  // }
-  // }
+
 
   onSubmit() {
     const productName = this.ProductForm.value.name;
     const productPrice = this.ProductForm.value.price;
-    const productDiscount = this.ProductForm.value.discount / 100;
-    const productTax = this.ProductForm.value.tax / 100;
+    const productDiscount = this.ProductForm.value.discount ;
+    const productTax = this.ProductForm.value.tax ;
     const productCategoryId = this.ProductForm.value.CategoryId;
     if (this.editMode) {
       this.productService.updateProduct({id:this.EditIndex,name:productName,price:productPrice,discount:productDiscount,tax:productTax,CategoryId:productCategoryId})

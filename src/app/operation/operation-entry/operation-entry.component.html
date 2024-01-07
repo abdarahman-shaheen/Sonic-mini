@@ -1,54 +1,60 @@
 <div class="wrapper">
   <form (ngSubmit)="onSubmit()" #f="ngForm">
-<div class="form-group mb-3">
-  <label for="customerName">Customer Name:</label>
-  <select id="customerName" name="customerName" [(ngModel)]="customerName" class="form-control " style="height: 30px;" >
-    <option value="">Select Customer</option>
-    <option value="ahmed">ahmed</option>
-    <option value="samer">samer</option>
-  </select>
-</div>
-    <div class="form-group">
-      <label for="customerType">Customer Type:</label>
-      <select id="customerType" name="customerType" [(ngModel)]="operationType" class="form-control"  style="height: 30px;">
-        <option value="">Select Type</option>
-        <option value="sales">sales</option>
-        <option value="return">return</option>
+    <div class="form-group mb-3">
+      <label for="customerName">Customer Name:</label>
+      <select id="customerName" name="customerName" [(ngModel)]="customerName" class="form-control" style="height: 30px;">
+        <option value="">Select Customer</option>
+        <option value="ahmed">ahmed</option>
+        <option value="samer">samer</option>
       </select>
     </div>
-    <div class="table">
-      <div class="row header">
-        <div class="cell">Item Name</div>
-        <div class="cell">Price</div>
-        <div class="cell">Discount</div>
-        <div class="cell">Tax</div>
-        <div class="cell">Quantity</div>
-      </div>
-      <div class="row" *ngFor="let item of items; let i = index">
-        <div class="cell" data-title="Age">{{ item.name }}</div>
-        <div class="cell" data-title="Age">{{ item.price }}</div>
-        <div class="cell" data-title="Occupation">{{ item.discount }} %</div>
-        <div class="cell" data-title="Location">{{ item.tax }} %</div>
-        <div class="cell" data-title="Location">
-          <input
-            id="{{ i }}"
-            [(ngModel)]="quantityArray[i]"
-            type="number"
-            [name]="'quantity_' + item.id"
-            (input)="onChange(i, quantityArray[i])"
-          />
-        </div>
-      </div>
-      <div>
-        <h4>Gross total {{ grossTotal }}</h4>
-        <h4>Discount {{ totalDiscount }}</h4>
-        <h4>Tax {{ totalTax }}%</h4>
-        <h4>Total {{ total }}</h4>
-        <h4>Item Count {{ Count }} </h4>
-        <h4>Total Count {{ itemCount }} </h4>
-      </div>
+    <div class="form-group">
+      <label for="customerType">Customer Type:</label>
+      <select id="customerType" name="customerType" [(ngModel)]="operationType" class="form-control" style="height: 30px;">
+        <option [value]="0">Select Type</option>
+        <option [value]="5">sales</option>
+        <option [value]="6">Retutn</option>
+      </select>
     </div>
-    <p class="alert alert-danger" *ngIf="isSaveNotAvilable">{{errorMassage}}</p>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Item Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Discount</th>
+            <th scope="col">Tax</th>
+            <th scope="col">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items; let i = index">
+            <td>{{ item.name }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.discount }} %</td>
+            <td>{{ item.tax }} %</td>
+            <td>
+              <input
+                id="{{ i }}"
+                [(ngModel)]="item.quantity"
+                name="quantity_{{ item.id }}"
+                type="number"
+                (ngModelChange)="onChange()"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h4>Gross total {{ grossTotal }}</h4>
+      <h4>Total Discount {{ totalDiscount }}</h4>
+      <h4>Total Tax {{ totalTax }}</h4>
+      <h4>Total {{ total }}</h4>
+      <h4>Item Count {{ Count }} </h4>
+      <h4>Total Count {{ itemCount }} </h4>
+    </div>
+    <p class="alert alert-danger" *ngIf="isSaveNotAvilable">{{ errorMassage }}</p>
     <div class="button-group">
       <button class="btn btn-success" type="submit">Save</button>
       <button class="btn btn-danger" type="button" (click)="onClear(f)">Clear</button>

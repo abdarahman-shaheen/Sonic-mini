@@ -16,7 +16,9 @@
     <div *ngIf="formLogin.get('password').touched && formLogin.get('password').hasError('minlength')" class="text-danger">
       Password must be at least 6 characters.
     </div>
-
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{errorMessage }}
+    </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
     <p></p>
   </form>

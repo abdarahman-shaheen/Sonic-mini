@@ -1,34 +1,76 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { operationService } from '../operations.service';
+import {
+  OperationDetailResponse,
+  operationService,
+} from '../operations.service';
 import { Operation } from '../operations.model';
 import { Subscription } from 'rxjs';
-
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-operations',
   templateUrl: './operations.component.html',
-  styleUrl: './operations.component.css',
+  styleUrls: ['./operations.component.css'], // Fix the typo here
 })
-export class OperationsComponent implements OnInit,OnDestroy {
-  constructor(private operationServie:operationService,private route:ActivatedRoute,private router:Router){}
-  searchInput='';
-  operations:Operation[]
-  subscrbtion:Subscription
-  ngOnInit(): void {
-    this.subscrbtion=  this.operationServie.OperationChanged
-    .subscribe(
-      (operation: Operation[]) => {
-        this.operations = operation;
-      }
-      );
-      this.operations= this.operationServie.getOperation();
-    }
+export class OperationsComponent implements OnInit, OnDestroy {
+  constructor(
+    private operationService: operationService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private modalService: NgbModal
+  ) {}
+  @ViewChild('FormViewOperation') testModal: NgbModalRef; // Reference to the modal template
 
-    ngOnDestroy(): void {
-      this.subscrbtion.unsubscribe()
-    }
-  goEntryOperation(){
-this.router.navigate(['operation-entry'],{relativeTo:this.route})
+  modalRef: NgbModalRef;
+  OperationDetails: OperationDetailResponse[];
+  searchInput = '';
+  operations: Operation[];
+  subscription: Subscription; // Fix the typo here
+
+  ngOnInit(): void {
+    // this.OperationDetails = [];
+    // this.subscription = this.operationService.operationsChange.subscribe(
+    //   (operations: Operation[]) => {
+
+    //     this.operations = operations;
+
+    //   }
+    // );
+    this.subscription = this.operationService
+      .getOperations()
+      .subscribe((operations) => {
+        this.operations = operations;
+      });
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  goEntryOperation() {
+
+    this.router.navigate(['operation-entry'], { relativeTo: this.route });
+  }
+  openModal(operationId: number) {
+    this.operationService.viewOperation(operationId).subscribe(
+      (data) => {
+
+        this.OperationDetails =data;
+      },
+      (error) => {
+        console.error('Error fetching operation details:', error);
+      }
+    );
+    this.modalRef = this.modalService.open(this.testModal, {
+      centered: true,
+      backdrop: false,
+    });
+  }
+
+  closeModel() {
+    if (this.modalRef) {
+      this.modalRef.dismiss();
+      this.OperationDetails = [];
+    }
+  }
 }

@@ -8,8 +8,9 @@ import { AuthService } from '../auth.service';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  errorMessage : string
+  count:number = 0;
   constructor(private authService:AuthService){}
-count:number = 0;
  formLogin:FormGroup = new FormGroup({
  "email": new FormControl("",[Validators.email,Validators.required]),
  "password": new FormControl("",[Validators.required,Validators.minLength(6)])
@@ -18,10 +19,16 @@ count:number = 0;
  onSubmit(){
   if (this.formLogin.valid) {
     this.authService.login({
+      id:0,
+      name:"samer",
       email: this.formLogin.value.email,
       password: this.formLogin.value.password
     });
     console.log(this.formLogin.value);
+    debugger
+    if(this.authService.errorMassege){
+      this.authService.errorMassege.subscribe(error=>this.errorMessage=error);
+    }
   } else {
     this.formLogin.markAllAsTouched();
   }

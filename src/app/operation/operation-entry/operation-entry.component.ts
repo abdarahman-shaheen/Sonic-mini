@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { ProductService } from '../../categoryproduct/product/product.service';
 import { Product } from '../../categoryproduct/product/product.model';
+import { Operation, OperationDetail } from '../operations.model';
+import { exhaustMap, forkJoin, take } from 'rxjs';
 
 @Component({
   selector: 'app-operation-entry',
@@ -11,101 +13,110 @@ import { Product } from '../../categoryproduct/product/product.model';
   styleUrls: ['./operation-entry.component.css'], // Fix the typo here
 })
 export class OperationEntryComponent implements OnInit {
-  constructor(
-    private router: Router,
-    private operationServie: operationService
-  , private itemService:ProductService) {}
-
-  ngOnInit(): void {
-    // Subscribe to productsChange to get the updated products
-    this.itemService.productsChange.subscribe((products: Product[]) => {
-      this.items = products;
-    });
-
-    // Fetch products initially
-    this.itemService.getProduct();
-  }
+  operationItem: Product[]
   isSaveNotAvilable = false;
-  errorMassege:string
+  errorMassege: string;
   grossTotal: number = 0;
   totalDiscount: number = 0;
   totalTax: number = 0;
   total: number = 0;
   customerName: string = '';
-  operationType: string = '';
-  items:Product[]=[]
-  quantityArray: number[] = Array(this.items.length).fill(0);
+  operationType: number = 0;
+  items: Product[] = [];
   itemCount: number = 0;
   Count: number = 0;
-  errorMassage:string
-  onChange(index: number, quantity: number) {
-    this.quantityArray[index] = quantity || 0;
+  errorMassage: string;
+
+  constructor(
+    private router: Router,
+    private operationServie: operationService,
+    private itemService: ProductService
+  ) {}
+
+  ngOnInit(): void {
+    // Subscribe to productsChange to get the updated products
+    this.itemService.productsChange.subscribe((products: Product[]) => {
+      this.operationItem=[];
+      this.items = products;
+      console.log(this.items);
+    });
+
+    // Fetch products initially
+    this.itemService.getProduct();
+  }
+
+  onChange() {
     this.grossTotal = 0;
     this.totalDiscount = 0;
     this.totalTax = 0;
-    this.Count = 0; // Reset Count before calculating
+    this.Count = 0;
 
-    this.items.forEach((currentItem, i) => {
-      this.grossTotal += currentItem.price * this.quantityArray[i];
-      this.totalDiscount +=
-        currentItem.price * (currentItem.discount / 100) * this.quantityArray[i];
-      this.totalTax += currentItem.tax * this.quantityArray[i]; // Use currentItem.tax directly
+    if (this.operationItem === undefined) {
+      this.operationItem = []; // Initialize operationItem if not already defined
+    }
 
-      if (this.quantityArray[i] > 0) {
-        // Increment Count for each item with quantity > 0
+    this.items.forEach((currentItem) => {
+      const itemQuantity = currentItem.quantity || 0;
+
+      const itemTotal = currentItem.price * itemQuantity;
+
+      this.grossTotal += itemTotal;
+
+      this.totalDiscount += itemTotal * (currentItem.discount / 100);
+      this.totalTax += itemTotal * (currentItem.tax / 100);
+
+      if (itemQuantity > 0) {
         this.Count++;
+       if(!this.operationItem.includes(currentItem)){
+this.operationItem.push(currentItem)
+       }
+        ;
       }
     });
 
-    this.itemCount = this.quantityArray.reduce((total, quantity) => total + quantity, 0);
+    this.itemCount = this.operationItem.reduce(
+      (total, currentItem) => total + (currentItem.quantity || 0),
+      0
+    );
 
-    // Calculate total without applying discount
-    const totalWithoutDiscount = this.grossTotal + this.totalTax;
+    // Round the values to two decimal places
+    this.grossTotal = parseFloat(this.grossTotal.toFixed(2));
+    this.totalDiscount = parseFloat(this.totalDiscount.toFixed(2));
+    this.totalTax = parseFloat(this.totalTax.toFixed(2));
 
-    // Calculate total after discount
-    const totalAfterDiscount = totalWithoutDiscount - this.totalDiscount;
-
-    this.total = totalAfterDiscount;
+    // Calculate the total after rounding
+    this.total = this.grossTotal + this.totalTax - this.totalDiscount;
+    this.total = parseFloat(this.total.toFixed(2));
   }
 
   onSubmit() {
-    if (this.total != 0 &&this.operationType!="" && this.customerName !=="") {
-      console.log(this.operationType+" "+this.customerName)
-      this.operationServie.setOperation({
-        grossTotal: this.grossTotal,
-        totalDiscount: this.totalDiscount,
-        totalTax: this.totalTax,
-        total: this.total,
-        itemCount: this.itemCount,
-        customerName: this.customerName,
-        operationType: this.operationType,
+    var operationSend = new Operation(0,
+    new Date(),
+    this.total,
+    this.grossTotal,
+    this.totalDiscount,
+    this.totalTax,
+    this.operationType,
+    [])
+    if ((this.total != 0 && this.operationType == 5 || this.operationType == 6)) {
+      this.operationItem.forEach(element => {
+       var operationDetail = new OperationDetail(element.quantity,element.id,-1)
+operationSend.Items.push(operationDetail);
       });
+      this.operationServie
+        .addOperation(operationSend)
+        this.router.navigate(['/operations']);
 
-      this.router.navigate(['/operations']);
     } else {
-      if(this.total==0){
-        this.errorMassage=" Please add items to Operation";
-      }
-else if(this.operationType==""){
-  this.errorMassage = "please add operation type"
-}
-else if(this.customerName ==""){
-  this.errorMassage = "please add customer type"
-}
-else{
-  this.errorMassage=" Please add items to Operation";
-}
       this.isSaveNotAvilable = true;
-      // switch(this.operationType==null || this.customerName){
-      //   case this.operationType==null :
-      //     this.errorMassege = "please add type operation"
-      //     break
-      //     case this.customerName:
-      //       this.errorMassege = "please add customer Name";
-      //       break;
-      //       default:
-      //         this.errorMassege = "please add item to operation"
-      // }
+      if (this.total == 0) {
+        this.errorMassage = ' Please add items to Operation';
+      } else if (this.operationType == 0 ) {
+        this.errorMassage = 'Please add valid operation type';
+      } else if (this.customerName == '') {
+        this.errorMassage = 'Please add customer type';
+      }
+      debugger
     }
   }
   onClear(form: NgForm) {

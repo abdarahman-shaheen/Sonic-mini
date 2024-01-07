@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbAlert, NgbAlertModule, NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { ManageCategoryComponent } from './manage-category/manage-category.component';
 import { ManageProductComponent } from './manage-product/manage-product.component';
+import { SharedModule } from '../Shared/shared.modul';
 
 
 @NgModule({
@@ -18,8 +19,6 @@ import { ManageProductComponent } from './manage-product/manage-product.componen
     ProductComponent,
     ManageCategoryComponent,
     ManageProductComponent,
-
-
   ],
   imports: [
     CommonModule,
@@ -30,8 +29,7 @@ import { ManageProductComponent } from './manage-product/manage-product.componen
     NgbAlert,
     NgbAlertModule,
     NgbNavModule,
-
-
+    SharedModule
   ]
 })
 export class CategoryproductModule { }

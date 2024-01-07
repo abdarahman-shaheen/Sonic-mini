@@ -14,7 +14,7 @@ export class ProductComponent implements OnInit {
   modalRef: NgbModalRef;
   isModeEdit = false;
   indexEdit :number;
-  searchInput:string=""
+  searchInput:string="";
   isNew = false;
 countProductId = 0
 products:Product[]

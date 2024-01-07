@@ -1,0 +1,13 @@
+.navbar-brand.active {
+  color: #fff; /* Change the color to your preferred active color */
+  background-color: #337ab7; /* Change the background color to your preferred active background color */
+ /* Optional: Add border-radius for a rounded look */
+  /* Optional: Add padding for better spacing */
+}
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  /* margin-right: auto; */
+  /* margin-left: auto; */
+}
