@@ -19,6 +19,7 @@ import { SharedModule } from '../Shared/shared.modul';
     OperationRoutingModule,
     FormsModule,
     SharedModule
-  ]
+  ],
+
 })
 export class OperationModule { }

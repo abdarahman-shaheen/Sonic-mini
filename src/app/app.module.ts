@@ -5,8 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SearchPip } from './Shared/filter.pipe';
+import { AuthInterceptorService } from './auth/auth-interceptor-service.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,13 @@ import { SearchPip } from './Shared/filter.pipe';
     NgbAlertModule
     ,    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

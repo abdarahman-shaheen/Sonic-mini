@@ -2,41 +2,58 @@ import { Injectable } from "@angular/core";
 import { User } from "./user.model";
 import { Router } from "@angular/router";
 import { BehaviorSubject, Subject } from "rxjs";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable({
-  providedIn:"root"
+  providedIn: "root",
 })
-export class AuthService{
-  errorMassege= new Subject<string>;
- isAuthSubject = new BehaviorSubject<boolean>(false);
- private apiUrl = "https://localhost:44351";
-constructor(private router:Router,private http:HttpClient){}
+export class AuthService {
+  errorMessage = new Subject<string>();
+  isAuthSubject = new BehaviorSubject<boolean>(false);
+  userSubject = new BehaviorSubject<User | null>(null);
+  private apiUrl = "https://localhost:44351";
 
+  // Method to get user information using the token
+  getUserInfo() {
+    const token = localStorage.getItem("token");
 
-login(user: User): void {
-
-  this.http.get<User[]>(this.apiUrl + "/api/User").subscribe(
-    (response:User[]) => {
-      const authenticatedUser = response.find(
-        (u) => u.email === user.email && u.password=== user.password
-      );
-      if (authenticatedUser) {
-        console.log(authenticatedUser);
-        this.isAuthSubject.next(true);
-        this.router.navigate(['operations']);
-      } else {
-        this.errorMassege.next("Email or password is incorrect");
-      }
-    },
-    (error) => {
-      console.error("Error fetching users:", error);
-      this.errorMassege.next("Email or password is incorrect");
+    if (!token) {
+      // Token not available, handle accordingly
+      return null;
     }
-  );
-}
-  Logout(){
-    this.isAuthSubject.next(false) ;
-    this.router.navigate(['/login'])
+     this.http.get<User>(this.apiUrl + "/api/User").subscribe(data=>console.log(data)
+     );
+  }
+
+  constructor(private router: Router, private http: HttpClient) {}
+
+  login(user: User): void {
+    this.http.post<User>(this.apiUrl + "/api/User/login", user).subscribe(
+      (response) => {
+        debugger
+        if(response.token){
+          localStorage.setItem('token', response.token);
+          this.isAuthSubject.next(true);
+          this.userSubject.next(response);
+          this.router.navigate(['operations']);
+        }
+        else{
+          this.errorMessage.next("The email and password is not correct");
+        }
+      },
+      (error) => {
+        console.error("Error fetching users:", error);
+        this.errorMessage.next(error);
+      }
+    );
+  }
+
+  logout() {
+    this.isAuthSubject.next(false);
+    localStorage.removeItem("token");
+    this.router.navigate(['/login']);
+  }
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('token');
   }
 }

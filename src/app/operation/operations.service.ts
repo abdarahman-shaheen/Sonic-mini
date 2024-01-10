@@ -48,8 +48,11 @@ export class operationService{
  addOperation(operation: Operation) {
     this.http.post<Operation>(`${this.apiUrl}/api/Operation`, operation).subscribe(
       (response: Operation) => {
-        this.operations.push(response);
-        this.operationsChange.next(this.operations.slice());
+
+        // this.operations.push(response);
+        // this.operationsChange.next(this.operations.slice());
+        console.log(response);
+        this.getOperations()
       },
       (error) => this.handleHttpError(error)
     );
@@ -58,9 +61,11 @@ export class operationService{
   updateOperation(operation: Operation) {
     this.http.put<Operation>(`${this.apiUrl}/api/Operation/${operation.id}`, operation).subscribe(
       (response: Operation) => {
-        const updatedOperationIndex = this.operations.findIndex(op => op.id === operation.id);
-        this.operations[updatedOperationIndex] = response;
-        this.operationsChange.next(this.operations.slice());
+        console.log(response);
+        this.getOperations()
+        // const updatedOperationIndex = this.operations.findIndex(op => op.id === operation.id);
+        // this.operations[updatedOperationIndex] = response;
+        // this.operationsChange.next(this.operations.slice());
       },
       (error) => this.handleHttpError(error)
     );
@@ -72,12 +77,13 @@ export class operationService{
 
   deleteOperation(id: number) {
     this.http.delete<Operation>(`${this.apiUrl}/api/Operation/${id}`).subscribe(
-      (response) => console.log(response),
+      (response) => {console.log(response);
+        this.getOperations()},
       (error) => this.handleHttpError(error)
     );
-    const index = this.operations.findIndex(operation => id === operation.id);
-    this.operations.splice(index, 1);
-    this.operationsChange.next(this.operations.slice());
+    // const index = this.operations.findIndex(operation => id === operation.id);
+    // this.operations.splice(index, 1);
+    // this.operationsChange.next(this.operations.slice());
   }
 
   private handleHttpError(error: any): void {

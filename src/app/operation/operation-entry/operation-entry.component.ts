@@ -44,7 +44,6 @@ export class OperationEntryComponent implements OnInit {
     // Fetch products initially
     this.itemService.getProduct();
   }
-
   onChange() {
     this.grossTotal = 0;
     this.totalDiscount = 0;
@@ -55,6 +54,19 @@ export class OperationEntryComponent implements OnInit {
       this.operationItem = []; // Initialize operationItem if not already defined
     }
 
+    // Calculate the total discount and total tax before rounding
+    this.totalDiscount = this.items.reduce((total, currentItem) => {
+      const itemQuantity = currentItem.quantity || 0;
+      const itemTotal = currentItem.price * itemQuantity;
+      return total + itemTotal * (currentItem.discount / 100);
+    }, 0);
+
+    this.totalTax = this.items.reduce((total, currentItem) => {
+      const itemQuantity = currentItem.quantity || 0;
+      const itemTotal = currentItem.price * itemQuantity;
+      return total + itemTotal * (currentItem.tax / 100);
+    }, 0);
+
     this.items.forEach((currentItem) => {
       const itemQuantity = currentItem.quantity || 0;
 
@@ -62,15 +74,11 @@ export class OperationEntryComponent implements OnInit {
 
       this.grossTotal += itemTotal;
 
-      this.totalDiscount += itemTotal * (currentItem.discount / 100);
-      this.totalTax += itemTotal * (currentItem.tax / 100);
-
       if (itemQuantity > 0) {
         this.Count++;
-       if(!this.operationItem.includes(currentItem)){
-this.operationItem.push(currentItem)
-       }
-        ;
+        if (!this.operationItem.includes(currentItem)) {
+          this.operationItem.push(currentItem);
+        }
       }
     });
 
@@ -79,7 +87,7 @@ this.operationItem.push(currentItem)
       0
     );
 
-    // Round the values to two decimal places
+    // Round the values after calculating total discount and total tax
     this.grossTotal = parseFloat(this.grossTotal.toFixed(2));
     this.totalDiscount = parseFloat(this.totalDiscount.toFixed(2));
     this.totalTax = parseFloat(this.totalTax.toFixed(2));

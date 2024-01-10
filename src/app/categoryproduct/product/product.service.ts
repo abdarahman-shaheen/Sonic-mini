@@ -23,8 +23,9 @@ setProduct(product: Product) {
   this.http.post<Product>(this.apiUrl + '/api/Item', product).subscribe(
     (response: Product) => {
       console.log(response);
-      this.products.push(response);
-      this.productsChange.next(this.products.slice());
+      // this.products.push(response);
+      // this.productsChange.next(this.products.slice());
+      this.getProduct()
     },
     (error) => {
       console.error(error);
@@ -36,9 +37,11 @@ updateProduct(product: Product) {
   this.http.put<Product>(this.apiUrl + `/api/Item`,product).subscribe(
     (response: Product) => {
       console.log(response);
-      var updatedCategory= this.products.findIndex(products =>products.id==product.id)
-      this.products[updatedCategory] = response;
-      this.productsChange.next(this.products.slice());
+      // var updatedCategory= this.products.findIndex(products =>products.id==product.id)
+      // this.products[updatedCategory] = response;
+      // this.productsChange.next(this.products.slice());
+      this.getProduct()
+
     },
     (error) => {
       console.error(error);
@@ -52,9 +55,10 @@ updateProduct(product: Product) {
   deleteProduct(id: number) {
     this.http.delete<Product>(this.apiUrl + `/api/Item/${id}`).subscribe((response) => {
       console.log(response);
+      this.getProduct()
     });
-    const index = this.products.findIndex((product) => id === product.id);
-    this.products.splice(index, 1);
-    this.productsChange.next(this.products.slice());
+    // const index = this.products.findIndex((product) => id === product.id);
+    // this.products.splice(index, 1);
+    // this.productsChange.next(this.products.slice());
   }
 }

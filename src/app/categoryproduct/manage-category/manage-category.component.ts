@@ -47,7 +47,6 @@ export class ManageCategoryComponent implements OnInit, OnChanges {
   }
   onSubmit() {
     const nameCategory = this.CategoryForm.value.name;
-    console.log(this.editMode);
     if (this.editMode) {
       this.categoryService.updateCategory({
         id: this.EditIndex,

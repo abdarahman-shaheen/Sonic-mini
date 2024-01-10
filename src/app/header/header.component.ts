@@ -14,13 +14,20 @@ export class HeaderComponent implements OnInit,OnDestroy {
   isAuthenticated :boolean;
   subscribsionLogOut:Subscription
   ngOnInit(): void {
-   this.subscribsionLogOut =  this.authService.isAuthSubject.subscribe((isAuth)=>{
-      this.isAuthenticated = isAuth
-     });
+      const token = localStorage.getItem('token');
+    if(token){
+      this.isAuthenticated = true ;
+    }
+    else{
+      this.subscribsionLogOut=  this.authService.isAuthSubject.subscribe(data=>{
+        this.isAuthenticated=data;
+      })
+    }
+
   }
   ngOnDestroy(): void {
     this.subscribsionLogOut.unsubscribe()  }
   onLogout(){
-    this.authService.Logout()
+  this.authService.logout() ;
   }
 }

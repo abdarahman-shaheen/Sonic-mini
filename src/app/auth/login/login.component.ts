@@ -20,17 +20,20 @@ export class LoginComponent {
   if (this.formLogin.valid) {
     this.authService.login({
       id:0,
-      name:"samer",
+    userName:"samer",
       email: this.formLogin.value.email,
-      password: this.formLogin.value.password
+      password: this.formLogin.value.password,
+      role:"Admin",
+
     });
     console.log(this.formLogin.value);
-    debugger
-    if(this.authService.errorMassege){
-      this.authService.errorMassege.subscribe(error=>this.errorMessage=error);
+
+    if(this.authService.errorMessage){
+      this.authService.errorMessage.subscribe(error=>this.errorMessage=error);
     }
   } else {
     this.formLogin.markAllAsTouched();
   }
 }
+
 }
