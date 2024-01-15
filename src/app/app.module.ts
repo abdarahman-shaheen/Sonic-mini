@@ -8,6 +8,7 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SearchPip } from './Shared/filter.pipe';
 import { AuthInterceptorService } from './auth/auth-interceptor-service.service';
+import { ToastrModule, ToastNoAnimation, ToastNoAnimationModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,9 @@ import { AuthInterceptorService } from './auth/auth-interceptor-service.service'
     BrowserModule,
     AppRoutingModule,
     NgbAlertModule
-    ,    HttpClientModule
+    ,    HttpClientModule,
+    ToastrModule.forRoot(),
+    ToastNoAnimationModule.forRoot()
   ],
   providers: [
     {

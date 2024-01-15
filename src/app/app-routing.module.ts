@@ -11,7 +11,7 @@ const routes: Routes = [
     path: 'operations',
     loadChildren: () => import('./operation/operation.module').then((m) => m.OperationModule),
     canActivate: [AuthGuard],
-    data: { roles: ['Admin']}
+    data: { roles: ['Admin','User']}
   },
   {
     path: 'ManageProduct',

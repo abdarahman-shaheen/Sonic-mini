@@ -11,9 +11,7 @@ private apiUrl = "https://localhost:44351";
   categoriyChange = new Subject<Category[]>()
 
   constructor(private http: HttpClient) {}
-   categories: Category[] = [
-
-  ];
+   categories: Category[]=[]
 
   getCategories() {
    return  this.http.get<Category[]>(this.apiUrl+'/api/Category')
@@ -37,7 +35,7 @@ private apiUrl = "https://localhost:44351";
         // Notify subscribers about the change
         // this.categories.push(response)
         // this.categoriyChange.next(this.categories.slice());
-        this.getCategories()
+        this.getMyCategory()
       },
       (error) => {
         console.error(error);
@@ -55,7 +53,7 @@ private apiUrl = "https://localhost:44351";
     //  var updatedCategory= this.categories.findIndex(categorie =>category.id==categorie.id)
     //  this.categories[updatedCategory] = response;
         // this.categoriyChange.next(this.categories.slice());
-        this.getCategories()
+        this.getMyCategory()
 
       },
       (error) => {
@@ -69,7 +67,7 @@ private apiUrl = "https://localhost:44351";
 deleteCategory(id:number){
   this.http.delete<Category>(this.apiUrl+`/api/Category/${id}`).subscribe(respons=>{
     console.log(respons);
-    this.getCategories()
+    this.getMyCategory()
   },error=>console.log(error)
   );
   // var updatedCategory= this.categories.findIndex(categorie =>id==categorie.id)
@@ -78,5 +76,15 @@ deleteCategory(id:number){
 }
 getCategory(id: number) {
   return this.categories.find(category => category.id === id);
+}
+
+getMyCategory(){
+this.http.get<Category[]>(this.apiUrl+'/api/Category/current').subscribe(
+(data:Category[])=>{
+  this.categories=data
+  this.categoriyChange.next(this.categories.slice());
+
+})
+
 }
 }

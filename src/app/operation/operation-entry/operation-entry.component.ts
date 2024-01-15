@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { operationService } from '../operations.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { ProductService } from '../../categoryproduct/product/product.service';
 import { Product } from '../../categoryproduct/product/product.model';
@@ -30,7 +30,8 @@ export class OperationEntryComponent implements OnInit {
   constructor(
     private router: Router,
     private operationServie: operationService,
-    private itemService: ProductService
+    private itemService: ProductService,
+    private route : ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -113,7 +114,7 @@ operationSend.Items.push(operationDetail);
       });
       this.operationServie
         .addOperation(operationSend)
-        this.router.navigate(['/operations']);
+        this.router.navigate(['../'],{relativeTo:this.route});
 
     } else {
       this.isSaveNotAvilable = true;

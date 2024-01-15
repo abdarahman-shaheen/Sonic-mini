@@ -46,6 +46,7 @@ export class operationService{
 
 
  addOperation(operation: Operation) {
+  debugger
     this.http.post<Operation>(`${this.apiUrl}/api/Operation`, operation).subscribe(
       (response: Operation) => {
 

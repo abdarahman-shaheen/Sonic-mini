@@ -17,6 +17,8 @@ subscribeLogin:Subscription
    this.subscribeLogin =  this.authService.isAuthSubject.subscribe((isAuth) => {
      this.login = isAuth;
     });
+    this.authService.autoLogin();
+
   }
   ngOnDestroy(): void {
     this.subscribeLogin.unsubscribe()

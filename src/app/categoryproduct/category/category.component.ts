@@ -61,12 +61,15 @@ export class CategoryComponent implements OnInit, OnDestroy {
     this.subscribtionCategory.unsubscribe();
   }
   ngOnInit(): void {
-    this.catgoryService.getCategories();
+    this.catgoryService.getMyCategory();
     this.subscribtionCategory = this.catgoryService.categoriyChange.subscribe(
       (data) => {
         this.categories = data;
       }
     );
+  }
+  getMyCategory(){
+
   }
   onNew() {
     this.isNew = true;

@@ -9,7 +9,8 @@ export class Operation {
     public discountTotal: number,
     public taxTotal: number,
     public typeOperationId: number,
-    public Items:OperationDetail[]
+    public Items:OperationDetail[],
+    public userId?:number
   ) {}
 }
 export class OperationDetail{
