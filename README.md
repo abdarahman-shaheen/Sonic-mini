@@ -1,7 +1,5 @@
 
-# Project Summary
-
-## Title: SonicMini
+## SonicMini
 
 ## ERD
 ![Project ERD Image](ERD-Mini-Soni.jpg)
