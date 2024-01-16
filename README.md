@@ -1,6 +1,7 @@
 
 ## SonicMini
-
+-This is the Frontend side I used  an Angular framework with JWT Authentication.
+- backed side [Mini Sonic](https://github.com/abdarahman-shaheen/Mini-Sonic) (I used .Net API )
 ## ERD
 ![Project ERD Image](ERD-Mini-Soni.jpg)
 
@@ -10,7 +11,7 @@
 - **API:** .NET Web API 
 - **Database:** SQL Server 
 
-## Screen's:
+## Screens:
 ### login
 ![Project ERD Image](src/assets/login.png)
 
