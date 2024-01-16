@@ -9,11 +9,13 @@
       Invalid email format.
     </div>
 
-    <input type="password" class="form-control" formControlName="password" placeholder="Password" required=""/>
-    <div *ngIf="formLogin.get('password').touched && formLogin.get('password').hasError('required')" class="text-danger">
+    <input type="password" class="form-control" formControlName="password" placeholder="Password" required="" />
+    <div *ngIf="formLogin.get('password').touched && formLogin.get('password').hasError('required')"
+      class="text-danger">
       Password is required.
     </div>
-    <div *ngIf="formLogin.get('password').touched && formLogin.get('password').hasError('minlength')" class="text-danger">
+    <div *ngIf="formLogin.get('password').touched && formLogin.get('password').hasError('minlength')"
+      class="text-danger">
       Password must be at least 6 characters.
     </div>
     <div *ngIf="errorMessage" class="alert alert-danger">

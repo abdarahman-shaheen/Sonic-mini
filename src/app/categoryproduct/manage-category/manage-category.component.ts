@@ -7,7 +7,6 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from '../category/category.service';
@@ -24,7 +23,7 @@ export class ManageCategoryComponent implements OnInit, OnChanges {
   @Input() editMode: boolean;
   @Input() EditIndex: number;
   @Output() closeModalEvent: EventEmitter<void> = new EventEmitter<void>();
-  user:User;
+  user: User;
   CategoryForm = new FormGroup({
     name: new FormControl('', Validators.required),
   });
@@ -32,7 +31,7 @@ export class ManageCategoryComponent implements OnInit, OnChanges {
     private categoryService: CategoryService,
     private route: ActivatedRoute,
     private router: Router,
-    private authService:AuthService
+    private authService: AuthService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -42,12 +41,9 @@ export class ManageCategoryComponent implements OnInit, OnChanges {
     }
   }
   ngOnInit(): void {
-this.authService.userSubject.subscribe(
-  user=>{
-    this.user= user ;
-  }
-)
-
+    this.authService.userSubject.subscribe((user) => {
+      this.user = user;
+    });
   }
 
   updateForm(editIndex: number) {
@@ -64,7 +60,7 @@ this.authService.userSubject.subscribe(
         categoryName: nameCategory,
       });
     } else {
-      this.categoryService.setCategory({categoryName:nameCategory,});
+      this.categoryService.setCategory({ categoryName: nameCategory });
     }
     this.CategoryForm.reset();
     this.closeModalEvent.emit();

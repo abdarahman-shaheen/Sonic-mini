@@ -2,18 +2,19 @@
   <div class="container d-flex justify-content-start ">
     <div class="navbar-header">
       <a class="navbar-brand" routerLink="/">Mini Sonic</a>
-      <a *ngIf="isAuthenticated && user.role=='Admin'" class="navbar-brand" routerLink="/ManageProduct/category" routerLinkActive="active">Products Management</a>
+      <a *ngIf="isAuthenticated && user && user.role=='Admin'" class="navbar-brand" routerLink="/ManageProduct/category"
+        routerLinkActive="active">Products Management</a>
       <a *ngIf="isAuthenticated" class="navbar-brand" routerLink="/operations" routerLinkActive="active">Operation</a>
     </div>
   </div>
-  <a class="navbar-brand" *ngIf="isAuthenticated && user" >{{user.userName}}</a>
-    <div >
-      <ul class="nav navbar-nav"></ul>
-      <ul class="nav navbar-nav navbar-right">
-        <a *ngIf="isAuthenticated" class="navbar-brand" style="cursor: pointer;" (click)="onLogout()">Logout</a>
+  <a class="navbar-brand" *ngIf="isAuthenticated && user">{{user.userName}}</a>
+  <div>
+    <ul class="nav navbar-nav"></ul>
+    <ul class="nav navbar-nav navbar-right">
+      <a *ngIf="isAuthenticated" class="navbar-brand" style="cursor: pointer;" (click)="onLogout()">Logout</a>
 
 
-      </ul>
-    </div>
+    </ul>
+  </div>
 
 </nav>

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { operationService } from '../operations.service';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { ProductService } from '../../categoryproduct/product/product.service';
 import { Product } from '../../categoryproduct/product/product.model';
@@ -13,7 +13,7 @@ import { exhaustMap, forkJoin, take } from 'rxjs';
   styleUrls: ['./operation-entry.component.css'], // Fix the typo here
 })
 export class OperationEntryComponent implements OnInit {
-  operationItem: Product[]
+  operationItem: Product[];
   isSaveNotAvilable = false;
   errorMassege: string;
   grossTotal: number = 0;
@@ -30,19 +30,16 @@ export class OperationEntryComponent implements OnInit {
   constructor(
     private router: Router,
     private operationServie: operationService,
-    private itemService: ProductService,
-    private route : ActivatedRoute
+    private itemService: ProductService
   ) {}
 
   ngOnInit(): void {
-    // Subscribe to productsChange to get the updated products
     this.itemService.productsChange.subscribe((products: Product[]) => {
-      this.operationItem=[];
+      this.operationItem = [];
       this.items = products;
       console.log(this.items);
     });
 
-    // Fetch products initially
     this.itemService.getProduct();
   }
   onChange() {
@@ -88,44 +85,48 @@ export class OperationEntryComponent implements OnInit {
       0
     );
 
-    // Round the values after calculating total discount and total tax
     this.grossTotal = parseFloat(this.grossTotal.toFixed(2));
     this.totalDiscount = parseFloat(this.totalDiscount.toFixed(2));
     this.totalTax = parseFloat(this.totalTax.toFixed(2));
 
-    // Calculate the total after rounding
     this.total = this.grossTotal + this.totalTax - this.totalDiscount;
     this.total = parseFloat(this.total.toFixed(2));
   }
 
   onSubmit() {
-    var operationSend = new Operation(0,
-    new Date(),
-    this.total,
-    this.grossTotal,
-    this.totalDiscount,
-    this.totalTax,
-    this.operationType,
-    [])
-    if ((this.total != 0 && this.operationType == 5 || this.operationType == 6)) {
-      this.operationItem.forEach(element => {
-       var operationDetail = new OperationDetail(element.quantity,element.id,-1)
-operationSend.Items.push(operationDetail);
+    var operationSend = new Operation(
+      0,
+      new Date(),
+      this.total,
+      this.grossTotal,
+      this.totalDiscount,
+      this.totalTax,
+      this.operationType,
+      []
+    );
+    if (
+      (this.total != 0 && this.operationType == 5) ||
+      this.operationType == 6
+    ) {
+      this.operationItem.forEach((element) => {
+        var operationDetail = new OperationDetail(
+          element.quantity,
+          element.id,
+          -1
+        );
+        operationSend.Items.push(operationDetail);
       });
-      this.operationServie
-        .addOperation(operationSend)
-        this.router.navigate(['../'],{relativeTo:this.route});
-
+      this.operationServie.addOperation(operationSend);
     } else {
       this.isSaveNotAvilable = true;
       if (this.total == 0) {
         this.errorMassage = ' Please add items to Operation';
-      } else if (this.operationType == 0 ) {
+      } else if (this.operationType == 0) {
         this.errorMassage = 'Please add valid operation type';
       } else if (this.customerName == '') {
         this.errorMassage = 'Please add customer type';
       }
-      debugger
+      debugger;
     }
   }
   onClear(form: NgForm) {

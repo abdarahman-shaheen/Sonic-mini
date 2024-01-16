@@ -40,13 +40,12 @@ export class ManageProductComponent implements OnInit, OnDestroy {
     CategoryId: new FormControl(0, Validators.required),
   });
   ngOnInit(): void {
-    // Fetch categories from the CategoryService this.catgoryService.getCategories();
     this.subscribtionCategory = this.categoryService.categoriyChange.subscribe(
       (data) => {
         this.categories = data;
       }
     );
-this.categoryService.getCategories()
+    this.categoryService.getCategories();
     // ...
   }
   ngOnDestroy(): void {
@@ -62,24 +61,30 @@ this.categoryService.getCategories()
   updateForm(editIndex: number) {
     const product = this.productService.getIndexProduct(editIndex);
 
-  this.ProductForm.setValue({
-    name: product ? product.name : '',
-    price: product ? product.price : 0,
-    discount: product ? product.discount : 0,
-    tax: product ? product.tax : 0,
-    CategoryId: product?product.id:null,
-  });
+    this.ProductForm.setValue({
+      name: product ? product.name : '',
+      price: product ? product.price : 0,
+      discount: product ? product.discount : 0,
+      tax: product ? product.tax : 0,
+      CategoryId: product ? product.id : null,
+    });
   }
-
 
   onSubmit() {
     const productName = this.ProductForm.value.name;
     const productPrice = this.ProductForm.value.price;
-    const productDiscount = this.ProductForm.value.discount ;
-    const productTax = this.ProductForm.value.tax ;
+    const productDiscount = this.ProductForm.value.discount;
+    const productTax = this.ProductForm.value.tax;
     const productCategoryId = this.ProductForm.value.CategoryId;
     if (this.editMode) {
-      this.productService.updateProduct({id:this.EditIndex,name:productName,price:productPrice,discount:productDiscount,tax:productTax,CategoryId:productCategoryId})
+      this.productService.updateProduct({
+        id: this.EditIndex,
+        name: productName,
+        price: productPrice,
+        discount: productDiscount,
+        tax: productTax,
+        CategoryId: productCategoryId,
+      });
     } else {
       this.productService.setProduct({
         id: 1,
@@ -89,7 +94,7 @@ this.categoryService.getCategories()
         tax: productTax,
         CategoryId: productCategoryId,
       });
-    } // this.closeModal();
+    }
     this.ProductForm.reset();
     this.closeModalEvent.emit();
     this.router.navigate(['./'], { relativeTo: this.route });
@@ -98,5 +103,4 @@ this.categoryService.getCategories()
   onClose() {
     this.closeModalEvent.emit();
   }
-
 }

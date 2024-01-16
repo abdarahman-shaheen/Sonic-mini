@@ -28,14 +28,6 @@ export class OperationsComponent implements OnInit, OnDestroy {
   subscription: Subscription; // Fix the typo here
 
   ngOnInit(): void {
-    // this.OperationDetails = [];
-    // this.subscription = this.operationService.operationsChange.subscribe(
-    //   (operations: Operation[]) => {
-
-    //     this.operations = operations;
-
-    //   }
-    // );
     this.subscription = this.operationService
       .getOperations()
       .subscribe((operations) => {
@@ -48,14 +40,12 @@ export class OperationsComponent implements OnInit, OnDestroy {
   }
 
   goEntryOperation() {
-
     this.router.navigate(['operation-entry'], { relativeTo: this.route });
   }
   openModal(operationId: number) {
     this.operationService.viewOperation(operationId).subscribe(
       (data) => {
-
-        this.OperationDetails =data;
+        this.OperationDetails = data;
       },
       (error) => {
         console.error('Error fetching operation details:', error);

@@ -6,6 +6,4 @@ import { SearchPip } from './filter.pipe';
   declarations: [SearchPip],
   exports: [SearchPip],
 })
-export class SharedModule {
-
-}
+export class SharedModule {}

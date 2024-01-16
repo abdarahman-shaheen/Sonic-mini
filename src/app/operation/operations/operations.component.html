@@ -1,41 +1,41 @@
-<div style="display: flex;flex-direction: column;" >
+<div style="display: flex;flex-direction: column;">
 
-<h2>Operations</h2>
-<div>
-  <input type="text" placeholder="Search" [(ngModel)]="searchInput">
-  <button class="btn btn-primary" (click)="goEntryOperation()">
-    <i class="fa-solid fa-plus"></i>  Add</button>
-</div>
-<table class="table table-bordered table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Operation ID</th>
-      <th scope="col">Operation Type</th>
-      <th scope="col">Operation Customer</th>
-      <th scope="col">Operation Date</th>
-      <th scope="col">Net Total</th>
-      <th scope="col">Gross Total</th>
-      <th scope="col" style="text-align: center;">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let operation of operations | search:searchInput:'typeOperationId';let i = index">
-      <!-- <tr *ngFor="let product of products | search:searchInput:'name'; let i = index"> -->
+  <h2>Operations</h2>
+  <div>
+    <input type="text" placeholder="Search" [(ngModel)]="searchInput">
+    <button class="btn btn-primary" (click)="goEntryOperation()">
+      <i class="fa-solid fa-plus"></i> Add</button>
+  </div>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Operation ID</th>
+        <th scope="col">Operation Type</th>
+        <th scope="col">Operation Customer</th>
+        <th scope="col">Operation Date</th>
+        <th scope="col">Net Total</th>
+        <th scope="col">Gross Total</th>
+        <th scope="col" style="text-align: center;">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let operation of operations | search:searchInput:'typeOperationId';let i = index">
+        <!-- <tr *ngFor="let product of products | search:searchInput:'name'; let i = index"> -->
 
-      <td>{{operation.id}}</td>
-      <td>{{operation.typeOperationId}}</td>
-      <td>{{operation.nameCustomer}}</td>
-      <td>{{operation.date | date}}</td>
-      <td>{{operation.netTotal}}</td>
-      <td>{{operation.grossTotal}}</td>
-      <td style="text-align: center;">
-        <button type="button" class="btn btn-primary" (click)="openModal(operation.id)">
-          <i class="fa-solid fa-eye"></i>  View Details
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+        <td>{{operation.id}}</td>
+        <td>{{operation.typeOperationId}}</td>
+        <td>{{operation.nameCustomer}}</td>
+        <td>{{operation.date | date}}</td>
+        <td>{{operation.netTotal}}</td>
+        <td>{{operation.grossTotal}}</td>
+        <td style="text-align: center;">
+          <button type="button" class="btn btn-primary" (click)="openModal(operation.id)">
+            <i class="fa-solid fa-eye"></i> View Details
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 <!-- Your modal template -->
 <ng-template #FormViewOperation let-modal style="margin-top: 100px;">

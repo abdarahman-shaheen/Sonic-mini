@@ -13,7 +13,7 @@
         <th scope="col">ID</th>
         <th scope="col">Name</th>
         <th class="header-actions" scope="col">Actions</th>
-            </tr>
+      </tr>
     </thead>
     <tbody>
       <tr *ngFor="let category of categories | search:searchInput:'categoryName',let i = index">
@@ -41,6 +41,7 @@
     </button>
   </div>
   <div class="modal-body">
-    <app-manage-category [editMode]="isModeEdit" [EditIndex]="indexEdit" (closeModalEvent)="closeModel()"></app-manage-category>
+    <app-manage-category [editMode]="isModeEdit" [EditIndex]="indexEdit"
+      (closeModalEvent)="closeModel()"></app-manage-category>
   </div>
 </ng-template>

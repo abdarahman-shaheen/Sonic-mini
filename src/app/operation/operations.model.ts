@@ -1,5 +1,3 @@
-import { Product } from "../categoryproduct/product/product.model";
-
 export class Operation {
   constructor(
     public id: number,
@@ -9,10 +7,14 @@ export class Operation {
     public discountTotal: number,
     public taxTotal: number,
     public typeOperationId: number,
-    public Items:OperationDetail[],
-    public userId?:number
+    public Items: OperationDetail[],
+    public userId?: number
   ) {}
 }
-export class OperationDetail{
-  constructor(public  quantity: number,public itemId: number,public  operationId: number){}
+export class OperationDetail {
+  constructor(
+    public quantity: number,
+    public itemId: number,
+    public operationId: number
+  ) {}
 }

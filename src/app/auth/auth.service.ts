@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from './user.model';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import * as jwt_decode from 'jwt-decode';
+import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 @Injectable({
   providedIn: 'root',
@@ -16,15 +15,6 @@ export class AuthService {
   private tokenExpirationTimer: any;
   private jwtHelper: JwtHelperService = new JwtHelperService();
   subscription: Subscription;
-  // getUserInfo() {
-  //   const token = localStorage.getItem("token");
-
-  //   if (!token) {
-  //     return null;
-  //   }
-  //    this.http.get<User>(this.apiUrl + "/api/User").subscribe(data=>console.log(data)
-  //    );
-  // }
 
   constructor(private router: Router, private http: HttpClient) {}
 
@@ -40,7 +30,6 @@ export class AuthService {
           this.setLogoutTimer(expiresInDuration);
           this.isAuthSubject.next(true);
           this.getUser();
-          // this.userSubject.next(response);
         } else {
           this.errorMessage.next('The email and password is not correct');
         }
@@ -83,21 +72,4 @@ export class AuthService {
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
   }
-  autoLogin() {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      if (this.jwtHelper.isTokenExpired(token)) {
-        // Token is expired, perform logout
-        this.logout();
-      } else {
-        // Token is valid, set up auto-login
-        this.isAuthSubject.next(true);
-        this.getUser();
-      }
-    }
-  }
-
-
 }
-

@@ -6,11 +6,15 @@ import { CategoryComponent } from './category/category.component';
 import { CategoryProductComponent } from './category-product/category-product.component';
 import { ProductComponent } from './product/product.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbAlert, NgbAlertModule, NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbAlert,
+  NgbAlertModule,
+  NgbModule,
+  NgbNavModule,
+} from '@ng-bootstrap/ng-bootstrap';
 import { ManageCategoryComponent } from './manage-category/manage-category.component';
 import { ManageProductComponent } from './manage-product/manage-product.component';
 import { SharedModule } from '../Shared/shared.modul';
-
 
 @NgModule({
   declarations: [
@@ -29,7 +33,7 @@ import { SharedModule } from '../Shared/shared.modul';
     NgbAlert,
     NgbAlertModule,
     NgbNavModule,
-    SharedModule
-  ]
+    SharedModule,
+  ],
 })
-export class CategoryproductModule { }
+export class CategoryproductModule {}

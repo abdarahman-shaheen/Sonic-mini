@@ -1,9 +1,15 @@
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { Category } from './category.model';
 import { CategoryService } from './category.service';
-import { Subscription} from 'rxjs';
-import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -14,17 +20,15 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 export class CategoryComponent implements OnInit, OnDestroy {
   constructor(
     private modalService: NgbModal,
-    private catgoryService: CategoryService,
-
+    private catgoryService: CategoryService
   ) {}
-  // @ViewChild('modalContent') modalContent: any; // Reference to the modal template
-  @ViewChild('CategotyManageModal') testModal: NgbModalRef; // Reference to the modal template
+  @ViewChild('CategotyManageModal') testModal: NgbModalRef;
   modalRef: NgbModalRef;
   isModeEdit = false;
   indexEdit: number;
   categories: Category[];
   isNew = false;
-  searchInput: string="";
+  searchInput: string = '';
   subscribtionCategory: Subscription;
   countId = 0;
 
@@ -32,31 +36,16 @@ export class CategoryComponent implements OnInit, OnDestroy {
     this.modalRef = this.modalService.open(this.testModal, {
       centered: true,
       backdrop: false,
-      size:'sm',
-
+      size: 'sm',
     });
   }
-    // this.modalRef = this.modalService.open(this.testModal, {
-    //   centered: true,
-    // });
-
 
   closeModel() {
     if (this.modalRef) {
       this.modalRef.dismiss();
-    } // Use close() instead of dismiss()
+    }
   }
 
-
-  //   openModal() {
-  //     this.modalRef = this.modalService.open(this.modalContent, {
-  //       centered: true,
-  //     });
-  //   }
-  // closeModel(){
-  //   this.modalRef.dismiss();
-
-  // }
   ngOnDestroy(): void {
     this.subscribtionCategory.unsubscribe();
   }
@@ -68,25 +57,19 @@ export class CategoryComponent implements OnInit, OnDestroy {
       }
     );
   }
-  getMyCategory(){
-
-  }
+  getMyCategory() {}
   onNew() {
     this.isNew = true;
   }
 
-  //   EditCategories(){
-  // this.router.navigate(['new'],{relativeTo:this.route})
-  //   }
   onEditMode(id: number) {
-  this.isModeEdit = true;
-  this.indexEdit = id
+    this.isModeEdit = true;
+    this.indexEdit = id;
   }
-  onAddMode(){
+  onAddMode() {
     this.isModeEdit = false;
   }
-  onDeleteMode(id:number){
-this.catgoryService.deleteCategory(id);
+  onDeleteMode(id: number) {
+    this.catgoryService.deleteCategory(id);
   }
-
 }

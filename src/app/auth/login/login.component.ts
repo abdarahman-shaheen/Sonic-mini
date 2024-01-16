@@ -7,58 +7,58 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
-export class LoginComponent  implements OnDestroy,OnInit {
-  errorMessage : string
-  count:number = 0;
-  subscribtion:Subscription
-  constructor(private authService:AuthService,private toaster:ToastrService){}
+export class LoginComponent implements OnDestroy, OnInit {
+  errorMessage: string;
+  count: number = 0;
+  subscribtion: Subscription;
+  constructor(
+    private authService: AuthService,
+    private toaster: ToastrService
+  ) {}
   ngOnInit(): void {
     this.toaster.clear();
   }
 
+  formLogin: FormGroup = new FormGroup({
+    email: new FormControl('', [Validators.email, Validators.required]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+    ]),
+  });
 
- formLogin:FormGroup = new FormGroup({
- "email": new FormControl("",[Validators.email,Validators.required]),
- "password": new FormControl("",[Validators.required,Validators.minLength(6)])
- })
-
- onSubmit(){
-  if (this.formLogin.valid) {
-    this.authService.login({
-      id:0,
-    userName:"samer",
-      email: this.formLogin.value.email,
-      password: this.formLogin.value.password,
-      role:"Admin",
-
-    });
- this.authService.userSubject.subscribe(user=>{
-  if(user){
-     if(this.toaster){
-      if(user.role=='Admin'){
-        this.toaster.success(`Welcome Admin ${user.userName}`)
-
-      }else
-      {
-        this.toaster.success(`Welcome User ${user.userName}`)
-
+  onSubmit() {
+    if (this.formLogin.valid) {
+      this.authService.login({
+        id: 0,
+        userName: 'samer',
+        email: this.formLogin.value.email,
+        password: this.formLogin.value.password,
+        role: 'Admin',
+      });
+      this.authService.userSubject.subscribe((user) => {
+        if (user) {
+          if (this.toaster) {
+            if (user.role == 'Admin') {
+              this.toaster.success(`Welcome Admin ${user.userName}`);
+            } else {
+              this.toaster.success(`Welcome User ${user.userName}`);
+            }
+            this.toaster = null;
+          }
+        }
+      });
+      console.log(this.formLogin.value);
+      if (this.authService.errorMessage) {
+        this.authService.errorMessage.subscribe(
+          (error) => (this.errorMessage = error)
+        );
       }
-       this.toaster = null;
-     }
-   }
-   })
-    console.log(this.formLogin.value);
-    if(this.authService.errorMessage){
-      this.authService.errorMessage.subscribe(error=>this.errorMessage=error);
+    } else {
+      this.formLogin.markAllAsTouched();
     }
-  } else {
-    this.formLogin.markAllAsTouched();
   }
-
-}
-ngOnDestroy(): void {
-}
-
+  ngOnDestroy(): void {}
 }

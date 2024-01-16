@@ -6,22 +6,24 @@ import { ProductComponent } from './product/product.component';
 import { ManageCategoryComponent } from './manage-category/manage-category.component';
 
 const routes: Routes = [
-  // { path: '' , redirectTo:'category'},
-  { path: '',component:CategoryProductComponent,children:[
-    { path: 'category', component: CategoryComponent },
-    {
-      path: 'category/new',
-      component: ManageCategoryComponent,
-      // resolve: [RecipesResolverService]
-    },
-    { path: 'product', component: ProductComponent },
-  ] },
+  {
+    path: '',
+    component: CategoryProductComponent,
+    children: [
+      { path: 'category', component: CategoryComponent },
+      {
+        path: 'category/new',
+        component: ManageCategoryComponent,
+      },
+      { path: 'product', component: ProductComponent },
+    ],
+  },
 
-  { path: '**', redirectTo:'category' },
+  { path: '**', redirectTo: 'category' },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class CategoryproductRoutingModule { }
+export class CategoryproductRoutingModule {}

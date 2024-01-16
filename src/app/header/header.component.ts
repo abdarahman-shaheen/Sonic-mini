@@ -7,36 +7,33 @@ import { User } from '../auth/user.model';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrl: './header.component.css',
 })
-export class HeaderComponent implements OnInit,OnDestroy {
-  user:User
-  constructor(private authService :AuthService,private router:Router){}
-  isAuthenticated :boolean;
-  subscribsionLogOut:Subscription
+export class HeaderComponent implements OnInit, OnDestroy {
+  user: User = null;
+  constructor(private authService: AuthService, private router: Router) {}
+  isAuthenticated: boolean;
+  subscribsionLogOut: Subscription;
   ngOnInit(): void {
-      const token = localStorage.getItem('token');
-    if(token){
-     this.authService.isAuthSubject.subscribe(data=>{
-        this.isAuthenticated=data;})
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.authService.isAuthSubject.subscribe((data) => {
+        this.isAuthenticated = data;
+      });
 
-        if(this.authService.isAuthenticated){
-          this.authService.userSubject.subscribe(user=>
-            this.user=user);
-        }
-
+      if (this.authService.isAuthenticated) {
+        this.authService.userSubject.subscribe((user) => (this.user = user));
+      }
+    } else {
+      this.authService.isAuthSubject.subscribe((data) => {
+        this.isAuthenticated = data;
+      });
     }
-    else{
-   this.authService.isAuthSubject.subscribe(data=>{
-        this.isAuthenticated=data;
-      })
-    }
-
   }
   ngOnDestroy(): void {
-    this.subscribsionLogOut.unsubscribe() ;
+    this.subscribsionLogOut.unsubscribe();
   }
-  onLogout(){
-  this.authService.logout() ;
+  onLogout() {
+    this.authService.logout();
   }
 }

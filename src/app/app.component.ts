@@ -5,26 +5,19 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
-export class AppComponent  implements OnInit,OnDestroy {
-
+export class AppComponent implements OnInit, OnDestroy {
   title = 'Sonic-min';
- login :boolean =false;
-subscribeLogin:Subscription
- constructor(private authService : AuthService){}
- ngOnInit(): void {
-   this.subscribeLogin =  this.authService.isAuthSubject.subscribe((isAuth) => {
-     this.login = isAuth;
+  login: boolean = false;
+  subscribeLogin: Subscription;
+  constructor(private authService: AuthService) {}
+  ngOnInit(): void {
+    this.subscribeLogin = this.authService.isAuthSubject.subscribe((isAuth) => {
+      this.login = isAuth;
     });
-    this.authService.autoLogin();
-
   }
   ngOnDestroy(): void {
-    this.subscribeLogin.unsubscribe()
+    this.subscribeLogin.unsubscribe();
   }
-
-
-
-
 }

@@ -9,15 +9,19 @@ const routes: Routes = [
   },
   {
     path: 'operations',
-    loadChildren: () => import('./operation/operation.module').then((m) => m.OperationModule),
+    loadChildren: () =>
+      import('./operation/operation.module').then((m) => m.OperationModule),
     canActivate: [AuthGuard],
-    data: { roles: ['Admin','User']}
+    data: { roles: ['Admin', 'User'] },
   },
   {
     path: 'ManageProduct',
-    loadChildren: () => import('./categoryproduct/categoryproduct.module').then((m) => m.CategoryproductModule),
+    loadChildren: () =>
+      import('./categoryproduct/categoryproduct.module').then(
+        (m) => m.CategoryproductModule
+      ),
     canActivate: [AuthGuard],
-    data: { roles: ['Admin'] }
+    data: { roles: ['Admin'] },
   },
 
   { path: '**', redirectTo: 'login' },
@@ -25,6 +29,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

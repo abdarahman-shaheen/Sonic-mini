@@ -1,90 +1,71 @@
-import { Injectable } from "@angular/core";
-import { Category } from "./category.model";
-import { Observable, Subject } from "rxjs";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { Category } from './category.model';
+import { Observable, Subject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
-  providedIn:'root'
+  providedIn: 'root',
 })
-export class CategoryService{
-private apiUrl = "https://localhost:44351";
-  categoriyChange = new Subject<Category[]>()
+export class CategoryService {
+  private apiUrl = 'https://localhost:44351';
+  categoriyChange = new Subject<Category[]>();
 
   constructor(private http: HttpClient) {}
-   categories: Category[]=[]
+  categories: Category[] = [];
 
   getCategories() {
-   return  this.http.get<Category[]>(this.apiUrl+'/api/Category')
+    return this.http
+      .get<Category[]>(this.apiUrl + '/api/Category')
       .subscribe((categories: Category[]) => {
         this.categories = categories;
         console.log(categories);
         this.categoriyChange.next(this.categories.slice());
-
       });
   }
 
-  // getCategories(): Category[] {
-  //   return this.categories;
-  // }
-  setCategory(category:Category){
-    this.http.post<Category>(this.apiUrl+"/api/Category", category).subscribe(
+  setCategory(category: Category) {
+    this.http.post<Category>(this.apiUrl + '/api/Category', category).subscribe(
       (response: Category) => {
         console.log(response);
-        // Update your local categories array if needed
-        // this.categories[index] = response;
-        // Notify subscribers about the change
-        // this.categories.push(response)
-        // this.categoriyChange.next(this.categories.slice());
-        this.getMyCategory()
+        this.getMyCategory();
       },
       (error) => {
         console.error(error);
       }
     );
-
-// this.categories.push(category);
-// this.categoriyChange.next(this.categories.slice())
   }
   updateCategory(category: Category) {
-    this.http.put<Category>(this.apiUrl+"/api/Category", category).subscribe(
+    this.http.put<Category>(this.apiUrl + '/api/Category', category).subscribe(
       (response: Category) => {
         console.log(response);
 
-    //  var updatedCategory= this.categories.findIndex(categorie =>category.id==categorie.id)
-    //  this.categories[updatedCategory] = response;
-        // this.categoriyChange.next(this.categories.slice());
-        this.getMyCategory()
-
+        this.getMyCategory();
       },
       (error) => {
         console.error(error);
       }
     );
-
-    // this.categoriyChange.next(this.categories.slice());
   }
 
-deleteCategory(id:number){
-  this.http.delete<Category>(this.apiUrl+`/api/Category/${id}`).subscribe(respons=>{
-    console.log(respons);
-    this.getMyCategory()
-  },error=>console.log(error)
-  );
-  // var updatedCategory= this.categories.findIndex(categorie =>id==categorie.id)
-  // this.categories.splice(updatedCategory,1)
-  // this.categoriyChange.next(this.categories.slice());
-}
-getCategory(id: number) {
-  return this.categories.find(category => category.id === id);
-}
+  deleteCategory(id: number) {
+    this.http.delete<Category>(this.apiUrl + `/api/Category/${id}`).subscribe(
+      (respons) => {
+        console.log(respons);
+        this.getMyCategory();
+      },
+      (error) => console.log(error)
+    );
+  }
+  getCategory(id: number) {
+    return this.categories.find((category) => category.id === id);
+  }
 
-getMyCategory(){
-this.http.get<Category[]>(this.apiUrl+'/api/Category/current').subscribe(
-(data:Category[])=>{
-  this.categories=data
-  this.categoriyChange.next(this.categories.slice());
-
-})
-
-}
+  getMyCategory() {
+    this.http
+      .get<Category[]>(this.apiUrl + '/api/Category/current')
+      .subscribe((data: Category[]) => {
+        this.categories = data;
+        this.categoriyChange.next(this.categories.slice());
+      });
+  }
 }
