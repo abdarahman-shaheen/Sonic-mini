@@ -1,7 +1,7 @@
 
 # Project Summary
 
-## Title: [# SonicMin]
+## Title: SonicMini
 
 ## ERD
 ![Project ERD Image](path/to/your/image.jpg)
