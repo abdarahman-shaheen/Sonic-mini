@@ -13,3 +13,8 @@
 - **Database:** SQL Server [Version]
 
 ### Screen's:
+#### Operations
+![Project ERD Image](ERD-Mini-Soni.jpg)
+
+#### Product management 
+![Project ERD Image](ERD-Mini-Soni.jpg)
