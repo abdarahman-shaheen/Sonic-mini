@@ -4,7 +4,7 @@
 ## Title: SonicMini
 
 ## ERD
-![Project ERD Image](path/to/your/image.jpg)
+![Project ERD Image](ERD-Mini-Soni.jpg)
 
 ### Technologies Used:
 - **Frontend Framework:** Angular [Version]
